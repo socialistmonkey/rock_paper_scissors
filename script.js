@@ -10,10 +10,6 @@ function playRound() {
     const computerSelection = getComputerChoice();
     console.log(computerSelection);
 
-    let playerSelection = prompt("Rock, Paper or Scissors?");
-    playerSelection = playerSelection.toLowerCase()
-    console.log(playerSelection);
-
     if(playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors"){ // throws out user error if they type something else
         return "User Error! Try again!";
     }
@@ -31,20 +27,53 @@ function playRound() {
         return `You Lose! Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
   }
-  function playGame(){
-    for(let i = 0; i < 5; i++){
-        console.log(playRound());        
-    }
+//   function playGame(){
+//     for(let i = 0; i < 5; i++){
+//         console.log(playRound());        
+//     }
 
-    if(playerScore === computerScore){
-        console.log("FINAL: It's a tie!");
-    }
-    else if (playerScore < computerScore){
-        console.log("FINAL: You lost!");
-    }
-    else{
-        console.log("FINAL: You won!");
-    }
-}
+//     if(playerScore === computerScore){
+//         console.log("FINAL: It's a tie!");
+//     }
+//     else if (playerScore < computerScore){
+//         console.log("FINAL: You lost!");
+//     }
+//     else{
+//         console.log("FINAL: You won!");
+//     }
+// }
+
+const body = document.body
+
+const rock = document.createElement("button")
+rock.innerText = "Rock"
+body.append(rock)
+
+rock.addEventListener('click', function() {
+    playerSelection = "rock";
+    console.log(playerSelection);
+});
+
+const paper = document.createElement("button")
+paper.innerText = "Paper"
+body.append(paper)
+
+paper.addEventListener('click',function(){
+    playerSelection = "paper"
+    console.log(playerSelection )
+});
+
+const scissors = document.createElement("button")
+scissors.innerText = "Scissors"
+body.append(scissors)
+
+scissors.addEventListener('click', function(){
+    playerSelection = "scissors"
+    console.log("scissors")
+});
+
+const div = document.createElement("div")
+div.innerHTML = <p></p>
 
 playGame();
+
