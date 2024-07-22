@@ -5,43 +5,57 @@ function getComputerChoice(){
 }
 let playerScore = 0;
 let computerScore = 0;
+let playerSelection
 
-function playRound() {
+
+
+function playRound(playerSelection) {
     const computerSelection = getComputerChoice();
-    console.log(computerSelection);
+    computerChoice.innerText = `Computer Has Selected ${computerSelection}`;
 
-    if(playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors"){ // throws out user error if they type something else
+    if(playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors"){ 
         return "User Error! Try again!";
     }
-    else if (playerSelection === computerSelection){ //if theres a tie
+    else if (playerSelection === computerSelection){ 
+        updateScore()
         return `It's a Tie! Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else if((playerSelection === "rock" && computerSelection === "scissors")||
             (playerSelection === "paper" && computerSelection === "rock")||
             (playerSelection === "scissors" && computerSelection === "paper")){
                 playerScore++;
+                updateScore()
                 return `You win! Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
     else{
         computerScore++;
+        updateScore()
         return `You Lose! Player Score: ${playerScore}, Computer Score: ${computerScore}`;
     }
   }
-  function playGame(){
-    for(let i = 0; i < 5; i++){
-        console.log(playRound());        
-    }
+function updateScore(){
+    score.innerText = `Player Score: ${playerScore}, Computer Score: ${computerScore}`
+    checkWinner();
+}
 
-    if(playerScore === computerScore){
-        console.log("FINAL: It's a tie!");
-    }
-    else if (playerScore < computerScore){
-        console.log("FINAL: You lost!");
-    }
-    else{
-        console.log("FINAL: You won!");
+function checkWinner(){
+    if (playerScore === 5) {
+        alert("Congratulations! You won the game!");
+        resetGame();
+    } else if (computerScore === 5) {
+        alert("Sorry! You lost the game.");
+        resetGame();
     }
 }
+
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    updateScore();
+    userChoice.innerText = '';
+    computerChoice.innerText = '';
+}
+
 
 const body = document.body
 
@@ -52,7 +66,8 @@ body.append(rock)
 
 rock.addEventListener('click', function() {
     playerSelection = "rock";
-    resultDisplay.innerText = "You Have Selected Rock";
+    userChoice.innerText = "You Have Selected Rock";
+    playRound(playerSelection)
 });
 
 const paper = document.createElement("button")
@@ -61,7 +76,8 @@ body.append(paper)
 
 paper.addEventListener('click',function(){
     playerSelection = "paper"
-    resultDisplay.innerText = "You Have Selected Paper";
+    userChoice.innerText = "You Have Selected Paper";
+    playRound(playerSelection)
 });
 
 const scissors = document.createElement("button")
@@ -70,13 +86,16 @@ body.append(scissors)
 
 scissors.addEventListener('click', function(){
     playerSelection = "scissors"
-    resultDisplay.innerText = "You Have Selected Scissors";
+    userChoice.innerText = "You Have Selected Scissors";
+    playRound(playerSelection)
 });
 
-const resultDisplay = document.createElement('div')
-body.append(resultDisplay)
+const userChoice = document.createElement('div')
+body.append(userChoice)
 
+const computerChoice = document.createElement("div")
+body.append(computerChoice)
 
-playGame();
-
-// current issue is that its not comparing playerselection to computer selection for some reason i dont understand why, will try redownloading the old versoin back and comparing what went wrong
+const score = document.createElement("div")
+score.innerText = `Player Score: ${playerScore}, Computer Score: ${computerScore}`;
+body.append(score)
